@@ -1,49 +1,25 @@
 pipeline {
-    agent any
-
-    environment {
-        REMOTE_USER = 'user' // Replace with your remote username
-        REMOTE_HOST = 'your-server' // Replace with your server address
-        REMOTE_PATH = '/etc/nginx/nginx.conf'
-        SSH_KEY_ID = 'your-ssh-key-id' // Jenkins credentials ID for SSH key
-    }
+    agent any 
 
     stages {
         stage('Clone Repository') {
             steps {
-                echo 'Repository cloned.' // Implicit when using "Pipeline script from SCM"
+                // This step is implicit with "Pipeline script from SCM"
+                // It will clone the repository defined in the job configuration
+                echo 'Repository cloned.'
             }
         }
-
+        
         stage('Deploy Nginx Config') {
             steps {
-                echo 'Starting deployment of Nginx configuration...'
-
-                withCredentials([sshUserPrivateKey(credentialsId: "${SSH_KEY_ID}", keyFileVariable: 'KEY')]) {
-                    // Copy config to remote server
-                    sh '''
-                        echo "Copying nginx.conf to remote server..."
-                        scp -i $KEY -o StrictHostKeyChecking=no nginx.conf ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH} || exit 1
-                    '''
-
-                    // Restart Nginx on remote server
-                    sh '''
-                        echo "Restarting Nginx service on remote server..."
-                        ssh -i $KEY -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} "sudo systemctl restart nginx || exit 1"
-                    '''
-                }
-
-                echo 'Nginx configuration deployed and service restarted.'
+                // This is a placeholder for your deployment logic.
+                // In a real-world scenario, you would have a script here
+                // to copy the Nginx config to a target server and restart Nginx.
+                
+                // Example of a placeholder command:
+                sh 'echo "Simulating deployment of Nginx configuration..."'
+                sh 'echo "Deployment completed successfully!"'
             }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ Deployment completed successfully.'
-        }
-        failure {
-            echo '❌ Deployment failed. Please check the logs for details.'
         }
     }
 }
