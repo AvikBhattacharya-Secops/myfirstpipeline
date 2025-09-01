@@ -16,7 +16,7 @@ pipeline {
         stage('Deploy NGINX') {
             steps {
                 // The `sshagent` step injects the private key for the duration of this block.
-                sshagent (credentials: ['your-ssh-key-id']) {
+                sshagent (credentials: ['webhook']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${EC2_HOST} << EOF
                         sudo yum update -y
