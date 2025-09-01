@@ -1,25 +1,41 @@
 pipeline {
-    agent any 
+    agent any
+
+    environment {
+        // Defines the SSH target, which can be an IP address or hostname.
+        EC2_HOST = 'ec2-user@your-ec2-public-ip'
+    }
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                // This step is implicit with "Pipeline script from SCM"
-                // It will clone the repository defined in the job configuration
-                echo 'Repository cloned.'
+                git 'https://github.com/your-repo/nginx-deploy.git'
             }
         }
-        
-        stage('Deploy Nginx Config') {
+
+        stage('Deploy NGINX') {
             steps {
-                // This is a placeholder for your deployment logic.
-                // In a real-world scenario, you would have a script here
-                // to copy the Nginx config to a target server and restart Nginx.
-                
-                // Example of a placeholder command:
-                sh 'echo "Simulating deployment of Nginx configuration..."'
-                sh 'echo "Deployment completed successfully!"'
+                // The `sshagent` step injects the private key for the duration of this block.
+                sshagent (credentials: ['your-ssh-key-id']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${EC2_HOST} << EOF
+                        sudo yum update -y
+                        sudo amazon-linux-extras install nginx1 -y
+                        sudo systemctl start nginx
+                        sudo systemctl enable nginx
+                        EOF
+                    """
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ NGINX deployed successfully!'
+        }
+        failure {
+            echo '❌ Deployment failed.'
         }
     }
 }
