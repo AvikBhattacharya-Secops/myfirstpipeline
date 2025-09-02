@@ -18,7 +18,7 @@ pipeline {
                 // The `sshagent` step injects the private key for the duration of this block.
                 sshagent (credentials: ['nginx']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${EC2_HOST} << EOF
+                        ssh -o StrictHostKeyChecking=no ${ubuntu} << EOF
                         sudo yum update -y
                         sudo amazon-linux-extras install nginx1 -y
                         sudo systemctl start nginx
