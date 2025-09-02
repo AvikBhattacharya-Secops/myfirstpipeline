@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Defines the SSH target, which can be an IP address or hostname.
-        EC2_HOST = '13.232.226.214'
+        EC2_HOST = '13.203.114.157'
     }
 
     stages {
