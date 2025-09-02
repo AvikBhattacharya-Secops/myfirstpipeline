@@ -25,7 +25,7 @@ pipeline {
                             sudo systemctl start nginx
 
                             echo " NGINX deployed and running on EC2!"
-                        EOF
+                EOF
                     '''
                 }
             }
