@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-repo/nginx-deploy.git'
+                git credentialsId: 'GitAccess', url: 'https://github.com/AvikBhattacharya-Secops/myfirstpipeline.git'
             }
         }
         /*
