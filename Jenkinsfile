@@ -13,7 +13,7 @@ pipeline {
                 echo ' Deploying NGINX to EC2 instance (13.203.114.157)'
                 sshagent(['ec2']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@13.203.114.157 << 'EOF'
+                        ssh -o StrictHostKeyChecking=no ubuntu@35.154.68.101 << 'EOF'
                             echo "Updating package list..."
                             sudo apt-get update -y
 
