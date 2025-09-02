@@ -1,42 +1,24 @@
 pipeline {
     agent any
-
-    environment {
-        // Defines the SSH target, which can be an IP address or hostname.
-        EC2_HOST = '13.203.114.157'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Test Checkout') {
             steps {
-                git credentialsId: 'GitAccess', url: 'https://github.com/AvikBhattacharya-Secops/myfirstpipeline.git'
+                echo 'Successfully checked out the code!'
             }
         }
-        /*
-        stage('Deploy NGINX') {
+        stage('Run Test Script') {
             steps {
-                // The `sshagent` step injects the private key for the duration of this block.
-                sshagent (credentials: ['nginx']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ${ubuntu} << EOF
-                        sudo yum update -y
-                        sudo amazon-linux-extras install nginx1 -y
-                        sudo systemctl start nginx
-                        sudo systemctl enable nginx
-                        EOF
-                    """
-                }
+                echo ' Running dummy test...'
+                sh 'echo "Hello from Jenkins!"'
             }
         }
-  */
-    } 
-   
+    }
     post {
         success {
-            echo '✅ NGINX deployed successfully!'
+            echo ' Pipeline completed successfully!'
         }
         failure {
-            echo '❌ Deployment failed.'
+            echo 'Pipeline failed.'
         }
     }
 }
