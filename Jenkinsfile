@@ -12,7 +12,7 @@ pipeline {
                 git 'https://github.com/your-repo/nginx-deploy.git'
             }
         }
-
+        /*
         stage('Deploy NGINX') {
             steps {
                 // The `sshagent` step injects the private key for the duration of this block.
@@ -28,8 +28,9 @@ pipeline {
                 }
             }
         }
-    }
-
+  */
+    } 
+   
     post {
         success {
             echo '✅ NGINX deployed successfully!'
