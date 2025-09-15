@@ -10,10 +10,10 @@ pipeline {
 
         stage('Deploy NGINX to EC2') {
             steps {
-                echo 'Deploying NGINX to EC2 instance (43.205.103.202)'
+                echo 'Deploying NGINX to EC2 instance (13.201.119.72)'
                 sshagent(['ec2']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@43.205.103.202 << 'EOF'
+                        ssh -o StrictHostKeyChecking=no ubuntu@13.201.119.72 << 'EOF'
                         echo "Updating package list..."
                         sudo apt-get update -y
 
